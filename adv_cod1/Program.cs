@@ -17,7 +17,7 @@ namespace adv_cod1
 
             foreach (var line in lines)
             {
-                //numbers.Add(searchNumber(line, false));
+                numbers.Add(searchNumber(line, false));
                 numbers2.Add(searchNumber(line, true));
             }
 
@@ -34,8 +34,8 @@ namespace adv_cod1
 
             if (replace)
             {
-                line = line.Replace("three", "3").Replace("five", "5").Replace("nine", "9").Replace("two", "2").Replace("one", "1").Replace("eight", "8").Replace("four", "4")
-                    .Replace("six", "6").Replace("seven", "7");
+                line = line.Replace("one", "one1one").Replace("two", "two2two").Replace("three", "three3three").Replace("four", "four4four").Replace("five", "five5five")
+                    .Replace("six", "six6six").Replace("seven", "seven7seven").Replace("eight", "eight8eight").Replace("nine", "nine9nine");
             }
 
             char[] chars = line.ToCharArray();
