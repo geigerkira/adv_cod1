@@ -26,6 +26,11 @@ namespace adv_cod3
             bool isNumber;
             bool partNumber;
 
+            var list2 = new List<int>();
+            var stars = new Dictionary<string, int>();
+            string xPos = "";
+
+
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -68,7 +73,7 @@ namespace adv_cod3
                             isNumber = int.TryParse(currentLine[idx + 2].ToString(), out num);
                             if (isNumber)
                             {
-                                //legalább 3 szám van
+                                // 3 szám van
                                 number += num.ToString();
 
                                 if (previousLine != null)
@@ -92,6 +97,7 @@ namespace adv_cod3
                                     }
                                 }
 
+                                xPos = StarPos(previousLine, currentLine, nextLine, i, idx, 3);
                                 idx += 3;
                             }
                             else
@@ -118,7 +124,7 @@ namespace adv_cod3
                                         partNumber = true;
                                     }
                                 }
-
+                                xPos = StarPos(previousLine, currentLine, nextLine, i, idx, 2);
                                 idx += 2;
                             }
                         }
@@ -143,12 +149,27 @@ namespace adv_cod3
                                     partNumber = true;
                                 }
                             }
+                            xPos = StarPos(previousLine, currentLine, nextLine, i, idx, 1);
                             idx += 1;
                         }
 
                         if (partNumber)
                         {
                             numbers.Add(int.Parse(number));
+                        }
+
+                        if (xPos != "")
+                        {
+                            if (stars.ContainsKey(xPos) == false)
+                            {
+                                stars.Add(xPos, int.Parse(number));
+                            }
+                            else
+                            {
+                                int mult = stars[xPos];
+                                int eredmeny = mult * int.Parse(number);
+                                list2.Add(eredmeny);
+                            }
                         }
                     }
                     else
@@ -157,11 +178,110 @@ namespace adv_cod3
                     }
                 }
 
-
             }
 
             Console.WriteLine(numbers.Sum());
+            Console.WriteLine(list2.Sum());
             Console.ReadLine();
         }
+
+        private static string StarPos(string previousLine, string currentLine, string nextLine, int i, int idx, int length)
+        {
+            string xPos = "";
+
+            // length = 1,2,3
+            if (previousLine != null)
+            {
+                if (previousLine[idx - 1] == '*')
+                {
+                    xPos = (i - 1).ToString() + (idx - 1).ToString();
+                }
+                else if ((previousLine[idx] == '*'))
+                {
+                    xPos = (i - 1).ToString() + (idx).ToString();
+                }
+                else if ((previousLine[idx + 1] == '*'))
+                {
+                    xPos = (i - 1).ToString() + (idx + 1).ToString();
+                }
+            }
+            if ((currentLine[idx - 1] == '*'))
+            {
+                xPos = (i).ToString() + (idx - 1).ToString();
+            }
+            else if ((currentLine[idx + 1] == '*'))
+            {
+                xPos = (i).ToString() + (idx + 1).ToString();
+            }
+            if (nextLine != null)
+            {
+                if (nextLine[idx - 1] == '*')
+                {
+                    xPos = (i + 1).ToString() + (idx - 1).ToString();
+                }
+                else if ((nextLine[idx] == '*'))
+                {
+                    xPos = (i + 1).ToString() + (idx).ToString();
+                }
+                else if ((nextLine[idx + 1] == '*'))
+                {
+                    xPos = (i + 1).ToString() + (idx + 1).ToString();
+                }
+            }
+
+
+            // length = 2,3
+            if (length > 1)
+            {
+                if (previousLine != null)
+                {
+                    if (previousLine[idx + 2] == '*')
+                    {
+                        xPos = (i - 1).ToString() + (idx + 2).ToString();
+                    }
+                }
+                if ((currentLine[idx + 2] == '*'))
+                {
+                    xPos = (i).ToString() + (idx + 2).ToString();
+                }
+                if (nextLine != null)
+                {
+                    if ((nextLine[idx + 2] == '*'))
+                    {
+                        xPos = (i + 1).ToString() + (idx + 2).ToString();
+                    }
+                }
+
+            }
+
+            // length = 3
+            if (length == 3)
+            {
+                if (previousLine != null)
+                {
+                    if (previousLine[idx + 3] == '*')
+                    {
+                        xPos = (i - 1).ToString() + (idx + 3).ToString();
+                    }
+                }
+
+                if ((currentLine[idx + 3] == '*'))
+                {
+                    xPos = (i).ToString() + (idx + 3).ToString();
+                }
+
+                if (nextLine != null)
+                {
+                    if ((nextLine[idx + 3] == '*'))
+                    {
+                        xPos = (i + 1).ToString() + (idx + 3).ToString();
+                    }
+                }
+
+            }
+
+            return xPos;
+        }
     }
+
 }
