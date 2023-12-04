@@ -14,6 +14,13 @@ namespace adv_cod4
 
             List<int> points = new List<int>();
 
+            int[] cardNumber = new int[lines.Length];
+
+            for (int i = 0; i < cardNumber.Length; i++)
+            {
+                cardNumber[i] = 1;
+            }
+
             string inputs;
 
             foreach (var line in lines)
@@ -22,7 +29,13 @@ namespace adv_cod4
                 points.Add(countPoints(inputs));
             }
 
+            for (int i = 0; i < lines.Length; i++)
+            {
+                cardNumber = addCards(cardNumber, i, lines[i]);
+            }
+
             Console.WriteLine(points.Sum());
+            Console.WriteLine(cardNumber.Sum());
             Console.ReadLine();
         }
 
@@ -50,6 +63,28 @@ namespace adv_cod4
             }
 
             return point;
+        }
+
+        static int[] addCards(int[] cardNumber, int idx, string inputs)
+        {
+            int matches = 0;
+            string[] winningNums = (inputs.Split('|')[0]).Split(' ');
+            string[] ownNums = (inputs.Split('|')[1]).Split(' ');
+
+            foreach (var wNum in winningNums)
+            {
+                if (ownNums.Contains(wNum) && wNum != "")
+                {
+                    matches++;
+                }
+            }
+
+            for (int i = 1; i < matches + 1; i++)
+            {
+                cardNumber[idx + i] += 1 * cardNumber[idx];
+            }
+
+            return cardNumber;
         }
     }
 }
