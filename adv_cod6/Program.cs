@@ -17,16 +17,17 @@ namespace adv_cod6
 
             int win;
 
-            int speed;
+            long speed;
 
-            int remTime;
+            long remTime;
 
-            int newDist;
+            long newDist;
 
             int point = 1;
 
             int idx = -1;
 
+            //1
             foreach (var time in times)
             {
                 idx++;
@@ -53,7 +54,36 @@ namespace adv_cod6
 
             }
 
+            //2
+            int time2 = 41667266;
+
+            long distance2 = 244104712281040;
+
+            long win2 = 0;
+
+            bool firstWin = false;
+
+            int j = 0;
+
+            while (firstWin == false)
+            {
+                j++;
+
+                speed = j;
+
+                remTime = time2 - speed;
+
+                newDist = remTime * speed;
+
+                if (newDist > distance2)
+                {
+                    firstWin = true;
+                    win2 = time2 - (j * 2) + 1;
+                }
+            }
+
             Console.WriteLine(point);
+            Console.WriteLine(win2);
             Console.ReadLine();
         }
     }
